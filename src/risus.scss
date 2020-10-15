@@ -1,0 +1,10 @@
+/* ------------------------------------ */
+/*				   Sass					*/
+/* This is your Sass entry file			*/
+/* ------------------------------------ */
+
+.risus {
+  @import 'styles/shared.scss';
+  @import 'styles/actor-sheet.scss';
+  @import 'styles/item-sheet.scss';
+}

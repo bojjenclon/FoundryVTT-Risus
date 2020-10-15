@@ -1,0 +1,15 @@
+<form class="{{cssClass}} cliche flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <input class="name" type="text" name="name" value="{{item.name}}" data-dtype="String" />
+  </header>
+
+  <hr class="divider">
+
+  <div class="sheet-body">
+    <div class="input-group">
+      <label for="dice">Dice</label>
+      <input id="dice" class="dice" type="number" name="data.dice" value="{{data.dice}}" min="0" max="10"
+        data-dtype="Number" />
+    </div>
+  </div>
+</form>

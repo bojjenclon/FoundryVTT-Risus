@@ -1,0 +1,41 @@
+{
+  "name": "risus",
+  "title": "Risus",
+  "description": "",
+  "version": "0.0.1",
+  "author": "bojjenclon",
+  "authors": [
+    {
+      "name": "",
+      "email": "",
+      "url": ""
+    }
+  ],
+  "scripts": [],
+  "esmodules": [
+    "risus.js"
+  ],
+  "styles": [
+    "risus.css"
+  ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "",
+  "minimumCoreVersion": "0.6.0",
+  "compatibleCoreVersion": "0.6.6",
+  "templateVersion": 2,
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "",
+  "readme": "",
+  "bugs": "",
+  "changelog": ""
+}
