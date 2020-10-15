@@ -1,4 +1,6 @@
 export interface CharacterSheetData extends ActorSheetData {
+  showPump: Boolean;
+
   cliches: Array<Object>;
   gear: Array<Object>;
 }
@@ -27,6 +29,8 @@ export class RisusCharacterSheet extends ActorSheet {
 
     const { actor } = this;
 
+    data.showPump = game.settings.get('risus', 'showPump');
+
     data.cliches = actor.itemTypes['cliche'] || [];
     data.gear = actor.itemTypes['gear'] || [];
 
@@ -35,6 +39,11 @@ export class RisusCharacterSheet extends ActorSheet {
 
   activateListeners(html: JQuery) {
     super.activateListeners(html);
+
+    const { type } = this.actor.data;
+
+    const window = html.closest('.window-app');
+    window.addClass(type);
 
     // Cliche listeners
     const clicheTab = html.find('.tab.cliche');

@@ -1,19 +1,42 @@
 &.sheet.actor {
   &.character {
-    min-width: 600px;
+    min-width : 600px;
+    min-height: 300px;
   }
 
   display       : flex;
   flex-direction: column;
 
+  .input-group {
+    display       : flex;
+    flex-direction: column;
+
+    input {
+      margin-top: 4px;
+    }
+  }
+
   .sheet-header {
     flex: 0;
+
+    display: flex;
+
 
     font-size: 2em;
 
     input {
       height : 1.5em;
       padding: 1px 5px;
+
+      font-size: inherit;
+    }
+
+    .input-group.name {
+      flex-basis: 85%;
+    }
+
+    .input-group.pump {
+      flex-basis: 15%;
     }
   }
 

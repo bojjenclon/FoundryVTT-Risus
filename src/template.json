@@ -16,6 +16,9 @@
         "biography": {
           "value": ""
         }
+      },
+      "pump": {
+        "value": 0
       }
     }
   },

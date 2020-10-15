@@ -5,6 +5,14 @@
       <label for="actor.name">Character</label>
       <input class="name" type="text" name="actor.name" value="{{actor.name}}" data-dtype="String" />
     </div>
+
+    {{#if showPump}}
+    <div class="input-group pump">
+      <label for="actor.name">Pump</label>
+      <input class="pump" type="number" name="data.pump.value" value="{{data.pump.value}}" min="0" max="99"
+        data-dtype="Number" />
+    </div>
+    {{/if}}
   </header>
 
   <hr class="divider">
