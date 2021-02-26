@@ -45,7 +45,7 @@ Hooks.once('init', async function () {
 	// Register custom sheets (if any)
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('risus', RisusCharacterSheet, {
-		types: ['character'],
+		// types: ['character'],
 		makeDefault: true,
 	});
 

@@ -44,4 +44,44 @@ export const registerHandlebars = () => {
   Handlebars.registerHelper('gte', (lhs, rhs) => {
     return lhs >= rhs;
   });
+
+  Handlebars.registerHelper('clicheName', (cliche: Entity) => {
+    if (cliche.getFlag('risus', 'modified')) {
+      return cliche.getFlag('risus', 'name');
+    }
+
+    return cliche.name;
+  });
+
+  Handlebars.registerHelper('clicheDice', (cliche: Entity) => {
+    if (cliche.getFlag('risus', 'modified')) {
+      return cliche.getFlag('risus', 'dice');
+    }
+
+    return cliche.data.data['dice'];
+  });
+
+  Handlebars.registerHelper('clicheModified', (cliche: Entity) => {
+    return cliche.getFlag('risus', 'modified');
+  });
+
+  Handlebars.registerHelper('gearName', (gear: Entity) => {
+    if (gear.getFlag('risus', 'modified')) {
+      return gear.getFlag('risus', 'name');
+    }
+
+    return gear.name;
+  });
+
+  Handlebars.registerHelper('gearQuantity', (gear: Entity) => {
+    if (gear.getFlag('risus', 'modified')) {
+      return gear.getFlag('risus', 'quantity');
+    }
+
+    return gear.data.data['quantity'];
+  });
+
+  Handlebars.registerHelper('gearModified', (gear: Entity) => {
+    return gear.getFlag('risus', 'modified');
+  });
 }

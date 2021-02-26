@@ -156,6 +156,19 @@
               align-items    : flex-end;
               justify-content: flex-end;
 
+              .roll-cliche {
+                &.disabled {
+                  color: rgb(95, 95, 95);
+                  pointer-events: none;
+                }
+              }
+
+              .save-cliche {
+                &.modified {
+                  color: #b50808;
+                }
+              }
+
               a:not(:last-child) {
                 margin-right: 8px;
               }
@@ -187,6 +200,19 @@
               display        : flex;
               align-items    : flex-end;
               justify-content: flex-end;
+
+              .save-gear {
+                &.modified {
+                  color: #b50808;
+                }
+              }
+
+              .edit-gear {
+                &.disabled {
+                  color: rgb(95, 95, 95);
+                  pointer-events: none;
+                }
+              }
 
               a:not(:last-child) {
                 margin-right: 8px;

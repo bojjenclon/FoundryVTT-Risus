@@ -1,2 +1,2 @@
-export class RisusItem extends Item {
+export class RisusItem<T = {}> extends Item<T> {
 }

@@ -48,15 +48,15 @@
         {{#each cliches as |cliche|}}
         <div class="row cliche" data-cliche-id="{{cliche.id}}">
           <div class="name">
-            <input type="text" name="clicheName" value="{{cliche.name}}" data-dtype="String" />
+            <input type="text" name="clicheName" value="{{clicheName cliche}}" data-dtype="String" />
           </div>
           <div class="dice">
-            <input type="number" name="clicheDice" value="{{cliche.data.data.dice}}" min="0" max="10"
+            <input type="number" name="clicheDice" value="{{clicheDice cliche}}" min="0" max="10"
               data-dtype="Number" />
           </div>
           <div class="actions">
-            <a class="roll-cliche"><i class="fa fa-dice-d20"></i></a>
-            <a class="save-cliche"><i class="fa fa-save"></i></a>
+            <a class="roll-cliche {{#if (clicheModified cliche)}}disabled{{/if}}"><i class="fa fa-dice-d20"></i></a>
+            <a class="save-cliche {{#if (clicheModified cliche)}}modified{{/if}}"><i class="fa fa-save"></i></a>
             <a class="delete-cliche"><i class="fa fa-trash"></i></a>
           </div>
         </div>
@@ -73,15 +73,15 @@
         {{#each gear as |item|}}
         <div class="row gear" data-gear-id="{{item.id}}">
           <div class="name">
-            <input type="text" name="gearName" value="{{item.name}}" data-dtype="String" />
+            <input type="text" name="gearName" value="{{gearName item}}" data-dtype="String" />
           </div>
           <div class="quantity">
-            <input type="number" name="gearQuantity" value="{{item.data.data.quantity}}" min="0" max="999"
+            <input type="number" name="gearQuantity" value="{{gearQuantity item}}" min="0" max="999"
               data-dtype="Number" />
           </div>
           <div class="actions">
-            <a class="save-gear"><i class="fa fa-save"></i></a>
-            <a class="edit-gear"><i class="fa fa-edit"></i></a>
+            <a class="save-gear {{#if (gearModified item)}}modified{{/if}}"><i class="fa fa-save"></i></a>
+            <a class="edit-gear {{#if (gearModified item)}}disabled{{/if}}"><i class="fa fa-edit"></i></a>
             <a class="delete-gear"><i class="fa fa-trash"></i></a>
           </div>
         </div>

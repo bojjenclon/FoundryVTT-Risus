@@ -1,4 +1,4 @@
-export class RisusActor extends Actor {
+export class RisusActor<T, I extends Item<{}>> extends Actor<T, I> {
   static async create(data, options = {}) {
     mergeObject(data, {
       data: {

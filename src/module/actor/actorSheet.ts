@@ -1,4 +1,4 @@
-export interface CharacterSheetData extends ActorSheetData {
+export interface CharacterSheetData extends ActorSheet.Data {
   showPump: Boolean;
 
   cliches: Array<Object>;
@@ -24,6 +24,8 @@ export class RisusCharacterSheet extends ActorSheet {
     return `systems/risus/templates/actor/${type}-sheet.html`;
   }
 
+  
+
   getData(): CharacterSheetData {
     const data = super.getData() as CharacterSheetData;
 
@@ -48,11 +50,43 @@ export class RisusCharacterSheet extends ActorSheet {
     // Cliche listeners
     const clicheTab = html.find('.tab.cliche');
 
+    const clicheNameInput = clicheTab.find('input[name="clicheName"]');
+    const clicheDiceInput = clicheTab.find('input[name="clicheDice"]');
+
     // Prevent the default behavior as it will refresh the form
     // before the user can save their changes.
-    clicheTab.find('input').on('change', evt => {
+    clicheTab.find('input').on('change', async (evt) => {
       evt.stopPropagation();
       evt.preventDefault();
+
+      const el = evt.currentTarget.closest('.cliche') as HTMLElement;
+      const clicheId = el.dataset.clicheId;
+
+      const cliche = this.actor.getOwnedItem(clicheId);
+
+      const oldName = cliche.name;
+      const oldDice = parseInt(cliche.data.data['dice'], 10);
+
+      const newName = clicheNameInput.val();
+      const newDice = parseInt(String(clicheDiceInput.val()), 10);
+
+      let doModify = true;
+
+      if (cliche.getFlag('risus', 'modified')) {
+        if (newName === oldName && newDice === oldDice) {
+          doModify = false;
+
+          await cliche.unsetFlag('risus', 'name');
+          await cliche.unsetFlag('risus', 'dice');
+          await cliche.unsetFlag('risus', 'modified');
+        }
+      }
+
+      if (doModify) {
+        await cliche.setFlag('risus', 'name', newName);
+        await cliche.setFlag('risus', 'dice', newDice);
+        await cliche.setFlag('risus', 'modified', true);
+      }
     });
 
     clicheTab.find('.add-cliche').on('click', async (evt) => {
@@ -77,7 +111,7 @@ export class RisusCharacterSheet extends ActorSheet {
       }
       const cliche = await actor.getOwnedItem(clicheId);
 
-      const numDice = cliche.data.data.dice;
+      const numDice = cliche.data.data['dice'];
       const roll = new Roll(`${numDice}d6`);
 
       roll.toMessage({
@@ -104,6 +138,10 @@ export class RisusCharacterSheet extends ActorSheet {
       const updatedName = clicheTab.find('input[name="clicheName"]').val();
       const updatedDice = clicheTab.find('input[name="clicheDice"]').val();
 
+      await cliche.unsetFlag('risus', 'name');
+      await cliche.unsetFlag('risus', 'dice');
+      await cliche.unsetFlag('risus', 'modified');
+
       await cliche.update({
         name: updatedName,
         'data.dice': updatedDice
@@ -127,11 +165,43 @@ export class RisusCharacterSheet extends ActorSheet {
     // Gear listeners
     const gearTab = html.find('.tab.gear');
 
+    const gearNameInput = gearTab.find('input[name="gearName"]');
+    const gearQuantityInput = gearTab.find('input[name="gearQuantity"]');
+
     // Prevent the default behavior as it will refresh the form
     // before the user can save their changes.
-    gearTab.find('input').on('change', evt => {
+    gearTab.find('input').on('change', async (evt) => {
       evt.stopPropagation();
       evt.preventDefault();
+
+      const el = evt.currentTarget.closest('.gear') as HTMLElement;
+      const gearId = el.dataset.gearId;
+
+      const gear = this.actor.getOwnedItem(gearId);
+
+      const oldName = gear.name;
+      const oldQuantity = parseInt(gear.data.data['quantity'], 10);
+
+      const newName = gearNameInput.val();
+      const newQuantity = parseInt(String(gearQuantityInput.val()), 10);
+
+      let doModify = true;
+
+      if (gear.getFlag('risus', 'modified')) {
+        if (newName === oldName && newQuantity === oldQuantity) {
+          doModify = false;
+
+          await gear.unsetFlag('risus', 'name');
+          await gear.unsetFlag('risus', 'quantity');
+          await gear.unsetFlag('risus', 'modified');
+        }
+      }
+
+      if (doModify) {
+        await gear.setFlag('risus', 'name', newName);
+        await gear.setFlag('risus', 'quantity', newQuantity);
+        await gear.setFlag('risus', 'modified', true);
+      }
     });
 
     gearTab.find('.add-gear').on('click', async (evt) => {
@@ -158,6 +228,10 @@ export class RisusCharacterSheet extends ActorSheet {
 
       const updatedName = gearTab.find('input[name="gearName"]').val();
       const updatedQuantity = gearTab.find('input[name="gearQuantity"]').val();
+
+      await gear.unsetFlag('risus', 'name');
+      await gear.unsetFlag('risus', 'quantity');
+      await gear.unsetFlag('risus', 'modified');
 
       await gear.update({
         name: updatedName,
@@ -195,5 +269,31 @@ export class RisusCharacterSheet extends ActorSheet {
 
       await actor.deleteOwnedItem(gearId);
     });
+  }
+
+  async close(): Promise<void> {
+    await super.close();
+
+    const allCliches = this.actor.itemTypes['cliche'];
+    for (let i = 0; i < allCliches.length; i++) {
+      const cliche = allCliches[i];
+
+      if (cliche.getFlag('risus', 'modified')) {
+        await cliche.unsetFlag('risus', 'name');
+        await cliche.unsetFlag('risus', 'dice');
+        await cliche.unsetFlag('risus', 'modified');
+      }
+    }
+
+    const allGear = this.actor.itemTypes['gear'];
+    for (let i = 0; i < allGear.length; i++) {
+      const gear = allGear[i];
+
+      if (gear.getFlag('risus', 'modified')) {
+        await gear.unsetFlag('risus', 'name');
+        await gear.unsetFlag('risus', 'quanitity');
+        await gear.unsetFlag('risus', 'modified');
+      }
+    }
   }
 }

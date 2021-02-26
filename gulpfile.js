@@ -10,6 +10,8 @@ const ts = require('gulp-typescript');
 const less = require('gulp-less');
 const sass = require('gulp-sass');
 const git = require('gulp-git');
+const sourcemaps = require('gulp-sourcemaps');
+const mergeStream = require('merge-stream');
 
 const argv = require('yargs').argv;
 
@@ -123,6 +125,7 @@ function createTransformer() {
 }
 
 const tsConfig = ts.createProject('tsconfig.json', {
+	sourceMap: true,
 	getCustomTransformers: (_program) => ({
 		after: [createTransformer()],
 	}),
@@ -136,7 +139,15 @@ const tsConfig = ts.createProject('tsconfig.json', {
  * Build TypeScript
  */
 function buildTS() {
-	return gulp.src('src/**/*.ts').pipe(tsConfig()).pipe(gulp.dest('dist'));
+	// return gulp.src('src/**/*.ts').pipe(tsConfig()).pipe(gulp.dest('dist'));
+	const processed = gulp
+    .src("src/**/*.ts")
+    .pipe(sourcemaps.init())
+    .pipe(tsConfig())
+    .pipe(sourcemaps.write(".", { sourceRoot: ".", includeContent: false }))
+    .pipe(gulp.dest("dist"));
+  const raw = gulp.src("src/**/*.ts").pipe(gulp.dest("dist"));
+  return mergeStream(raw, processed);
 }
 
 /**
