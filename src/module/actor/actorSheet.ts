@@ -134,10 +134,11 @@ export class RisusCharacterSheet extends ActorSheet {
         el = el.parentElement;
         clicheId = el.dataset.clicheId;
       }
+      const $row = $(el);
       const cliche = await actor.getOwnedItem(clicheId);
 
-      const updatedName = clicheTab.find('input[name="clicheName"]').val();
-      const updatedDice = clicheTab.find('input[name="clicheDice"]').val();
+      const updatedName = $row.find('input[name="clicheName"]').val();
+      const updatedDice = $row.find('input[name="clicheDice"]').val();
 
       await cliche.unsetFlag('risus', 'name');
       await cliche.unsetFlag('risus', 'dice');
@@ -226,10 +227,11 @@ export class RisusCharacterSheet extends ActorSheet {
         el = el.parentElement;
         gearId = el.dataset.gearId;
       }
+      const $row = $(el);
       const gear = await actor.getOwnedItem(gearId);
 
-      const updatedName = gearTab.find('input[name="gearName"]').val();
-      const updatedQuantity = gearTab.find('input[name="gearQuantity"]').val();
+      const updatedName = $row.find('input[name="gearName"]').val();
+      const updatedQuantity = $row.find('input[name="gearQuantity"]').val();
 
       await gear.unsetFlag('risus', 'name');
       await gear.unsetFlag('risus', 'quantity');
