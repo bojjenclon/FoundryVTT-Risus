@@ -24,7 +24,7 @@ export class RisusCharacterSheet extends ActorSheet {
     return `systems/risus/templates/actor/${type}-sheet.html`;
   }
 
-  
+
 
   getData(): CharacterSheetData {
     const data = super.getData() as CharacterSheetData;
@@ -50,17 +50,18 @@ export class RisusCharacterSheet extends ActorSheet {
     // Cliche listeners
     const clicheTab = html.find('.tab.cliche');
 
-    const clicheNameInput = clicheTab.find('input[name="clicheName"]');
-    const clicheDiceInput = clicheTab.find('input[name="clicheDice"]');
-
     // Prevent the default behavior as it will refresh the form
     // before the user can save their changes.
     clicheTab.find('input').on('change', async (evt) => {
       evt.stopPropagation();
       evt.preventDefault();
 
-      const el = evt.currentTarget.closest('.cliche') as HTMLElement;
-      const clicheId = el.dataset.clicheId;
+      const elRow = evt.currentTarget.closest('.cliche') as HTMLElement;
+      const $row = $(elRow);
+      const clicheId = elRow.dataset.clicheId;
+
+      const clicheNameInput = $row.find('input[name="clicheName"]');
+      const clicheDiceInput = $row.find('input[name="clicheDice"]');
 
       const cliche = this.actor.getOwnedItem(clicheId);
 
@@ -165,17 +166,18 @@ export class RisusCharacterSheet extends ActorSheet {
     // Gear listeners
     const gearTab = html.find('.tab.gear');
 
-    const gearNameInput = gearTab.find('input[name="gearName"]');
-    const gearQuantityInput = gearTab.find('input[name="gearQuantity"]');
-
     // Prevent the default behavior as it will refresh the form
     // before the user can save their changes.
     gearTab.find('input').on('change', async (evt) => {
       evt.stopPropagation();
       evt.preventDefault();
 
-      const el = evt.currentTarget.closest('.gear') as HTMLElement;
-      const gearId = el.dataset.gearId;
+      const elRow = evt.currentTarget.closest('.gear') as HTMLElement;
+      const $row = $(elRow);
+      const gearId = elRow.dataset.gearId;
+
+      const gearNameInput = $row.find('input[name="gearName"]');
+      const gearQuantityInput = $row.find('input[name="gearQuantity"]');
 
       const gear = this.actor.getOwnedItem(gearId);
 
