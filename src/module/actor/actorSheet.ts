@@ -14,7 +14,7 @@ export class RisusCharacterSheet extends ActorSheet {
       tabs: [{
         navSelector: ".sheet-tabs",
         contentSelector: ".tab-body",
-        initial: "bio"
+        initial: "cliche"
       }]
     });
   }
